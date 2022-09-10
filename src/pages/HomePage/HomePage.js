@@ -26,7 +26,7 @@ export default class HomePage extends Component {
       reqBody.category = ["sfw"];
     }
     axios.post(API_URL_LYRICS, reqBody).then((lyrics) => {
-      let formattedLyrics = lyrics.data.data.lyric.replace(/[^\x00-\x7F]/g, "")
+      let formattedLyrics = lyrics.data.data.lyric.replaceAll("â", "'")
       formattedLyrics = formattedLyrics.split('\n')
       .map((item, idx) => {
         return (
