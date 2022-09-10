@@ -124,7 +124,7 @@ export default class HomePage extends Component {
           Farmfluencer content from extraordinary fowl and gifted thinkers.
           Motivate your birds to be their best selves!
         </h2>
-        {this.showResults()};
+        {this.showResults()}
       </main>
     );
   }
