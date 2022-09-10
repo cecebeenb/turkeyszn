@@ -102,6 +102,7 @@ export default class HomePage extends Component {
             academic={this.state.academic}
             lyrics={this.state.lyrics}
           />
+          <h4>Change caption</h4>
           <div>
             <button
               onClick={() => {
@@ -118,6 +119,7 @@ export default class HomePage extends Component {
               Colloquial
             </button>
           </div>
+          <h4>Change turkey</h4>
           <TurkeyList
             turkeys={this.state.turkeys}
             handleUpdate={this.handleUpdate}
