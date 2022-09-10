@@ -121,7 +121,7 @@ export default class HomePage extends Component {
     return (
       <main className="main">
         <h2>
-          Farmfluencer content from extraordinary fowl and gifted thinkers.
+          Farm influencer content from extraordinary fowl and gifted thinkers.
           Motivate your birds to be their best selves!
         </h2>
         {this.showResults()}
