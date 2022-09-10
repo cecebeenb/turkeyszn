@@ -16,6 +16,7 @@ export default class HomePage extends Component {
     featuredTurkey: null,
     isLoading: true,
     academic: true,
+    lyrics: ''
   };
 
   getLyrics = (isAcademic) => {
@@ -36,12 +37,13 @@ export default class HomePage extends Component {
           </React.Fragment>
         )
       })
-      this.setState({
-        featuredTurkey: {
-          ...this.state.featuredTurkey,
-          lyrics: formattedLyrics,
-        },
-      });
+      // this.setState({
+      //   featuredTurkey: {
+      //     ...this.state.featuredTurkey,
+      //     lyrics: formattedLyrics,
+      //   },
+      // });
+      this.setState({lyrics: formattedLyrics})
     });
   };
 
@@ -76,9 +78,8 @@ export default class HomePage extends Component {
     const newTurkey = this.state.turkeys.find((turkey) => {
       return turkey.id === turkeyObj.id;
     });
-    this.setState({ featuredTurkey: newTurkey }, () => {
-      this.getLyrics(this.state.academic);
-    });
+    this.setState({ featuredTurkey: newTurkey });
+    // this.setState({ featuredTurkey: newTurkey });
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -99,6 +100,7 @@ export default class HomePage extends Component {
           <SingleTurkey
             featuredTurkey={this.state.featuredTurkey}
             academic={this.state.academic}
+            lyrics={this.state.lyrics}
           />
           <div>
             <button

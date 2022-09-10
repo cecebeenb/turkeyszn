@@ -12,7 +12,7 @@ export default function SingleTurkey(props) {
             alt={props.featuredTurkey.alt_description}
           />
           <p className="featured-turkey__lyrics">
-            {props.featuredTurkey.lyrics}
+            {props.lyrics}
           </p>
         </div>
       ) : (
