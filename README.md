@@ -5,7 +5,7 @@
 Run the following commands in your terminal:
 
 ```bash
-git clone git@github.com:cececlar/turkey-szn.git
+git clone git@github.com:cecebeenb/turkey-szn.git
 cd turkey-szn
 npm i
 ```
