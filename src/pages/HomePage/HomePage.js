@@ -5,7 +5,7 @@ import SingleTurkey from "../../components/SingleTurkey/SingleTurkey";
 import "./HomePage.scss";
 
 const API_URL_TURKEY_LIST =
-  "https://api.unsplash.com/search/photos?client_id=UZ0vKVwnEJngHGIlma5NcHw8t1M9VmZ5VfE-8MEBVDg&query=turkey+bird&page=1&per_page=10";
+  "https://api.unsplash.com/search/photos?client_id=UZ0vKVwnEJngHGIlma5NcHw8t1M9VmZ5VfE-8MEBVDg&query=turkey+bird&page=1&per_page=20";
 
 const API_URL_LYRICS =
   "https://a3odwonexi.execute-api.us-east-2.amazonaws.com/default/Bars_API";
@@ -26,10 +26,20 @@ export default class HomePage extends Component {
       reqBody.category = ["sfw"];
     }
     axios.post(API_URL_LYRICS, reqBody).then((lyrics) => {
+      let formattedLyrics = lyrics.data.data.lyric.replace(/[^\x00-\x7F]/g, "")
+      formattedLyrics = formattedLyrics.split('\n')
+      .map((item, idx) => {
+        return (
+          <React.Fragment key={idx}>
+            {item}
+            <br />
+          </React.Fragment>
+        )
+      })
       this.setState({
         featuredTurkey: {
           ...this.state.featuredTurkey,
-          lyrics: lyrics.data.data.lyric,
+          lyrics: formattedLyrics,
         },
       });
     });
