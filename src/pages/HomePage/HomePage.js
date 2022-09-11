@@ -19,12 +19,13 @@ export default class HomePage extends Component {
     featuredTurkey: null,
     isLoading: true,
     academic: true,
-    caption: ''
+    caption: 'Loading...'
   };
 
 
 
   getCaption = (isAcademic) => {
+    this.setState({caption: 'Loading...'})
 
     if (isAcademic == false) {
       const reqBody = { method: "getQuote", category: ["sfw"] };
