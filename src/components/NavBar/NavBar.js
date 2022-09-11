@@ -8,6 +8,7 @@ export default function NavBar() {
       <ul>
         <li>
           <Link to="/">🦃 TurkeySZN</Link>
+          <Link to="/about">About</Link>
         </li>
       </ul>
     </nav>
