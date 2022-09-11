@@ -74,10 +74,11 @@ export default class HomePage extends Component {
     axios
       .get(API_URL_TURKEY_LIST)
       .then((res) => {
+        let randomTurkey = res.data.results[Math.floor(Math.random()*res.data.results.length)]
         console.log(res.data)
         this.setState(
           {
-            featuredTurkey: res.data.results[0],
+            featuredTurkey: randomTurkey,
           },
           () => {
             const filteredArray = res.data.results.filter((turkey) => {
