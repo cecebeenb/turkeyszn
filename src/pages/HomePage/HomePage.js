@@ -3,9 +3,10 @@ import axios from "axios";
 import TurkeyList from "../../components/TurkeyList/TurkeyList";
 import SingleTurkey from "../../components/SingleTurkey/SingleTurkey";
 import "./HomePage.scss";
+import axiosRetry from "axios-retry"
 
 const API_URL_TURKEY_LIST =
-  "https://api.unsplash.com/search/photos?client_id=UZ0vKVwnEJngHGIlma5NcHw8t1M9VmZ5VfE-8MEBVDg&query=turkey+bird&page=1&per_page=20";
+  "https://api.unsplash.com/search/photos?client_id=UZ0vKVwnEJngHGIlma5NcHw8t1M9VmZ5VfE-8MEBVDg&query=turkey+bird&page=1&per_page=30";
 
 const API_URL_LYRICS =
   "https://a3odwonexi.execute-api.us-east-2.amazonaws.com/default/Bars_API";
@@ -21,6 +22,8 @@ export default class HomePage extends Component {
     caption: ''
   };
 
+
+
   getCaption = (isAcademic) => {
 
     if (isAcademic == false) {
@@ -30,6 +33,12 @@ export default class HomePage extends Component {
       // } else {
       //   reqBody.category = ["sfw"];
       // }
+      axiosRetry(axios, {
+        retries: 5,
+        retryCondition: (error) => {
+          return error.response.status === 502
+        },
+      })
       axios.post(API_URL_LYRICS, reqBody).then((lyrics) => {
         let formattedLyrics = lyrics.data.data.lyric.replaceAll("â", "'")
         formattedLyrics = formattedLyrics.split('\n')
@@ -139,13 +148,11 @@ export default class HomePage extends Component {
 
   render() {
     return (
-      <main className="main">
-        <h2>
-          Farm influencer content from extraordinary fowl and gifted thinkers.
-          Motivate your birds to be their best selves!
-        </h2>
+      <div className="main">
+        <h2>Being an influencer just got easier.</h2>
+        <p>This Thanksgiving, allow TurkeySZN to take care of the thing you are most grateful for: your social media presence and following. Generate inspirational content from extraordinary fowl and gifted thinkers, minus the hassle.</p>
         {this.showResults()}
-      </main>
+      </div>
     );
   }
 }
