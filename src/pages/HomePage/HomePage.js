@@ -74,6 +74,7 @@ export default class HomePage extends Component {
     axios
       .get(API_URL_TURKEY_LIST)
       .then((res) => {
+        console.log(res.data)
         this.setState(
           {
             featuredTurkey: res.data.results[0],
@@ -102,7 +103,6 @@ export default class HomePage extends Component {
       return turkey.id === turkeyObj.id;
     });
     this.setState({ featuredTurkey: newTurkey });
-    // this.setState({ featuredTurkey: newTurkey });
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -115,45 +115,7 @@ export default class HomePage extends Component {
       });
     }
   }
-
-  showResults = () => {
-    if (!this.state.isLoading) {
-      return (
-        <>
-          <SingleTurkey
-            featuredTurkey={this.state.featuredTurkey}
-            academic={this.state.academic}
-            caption={this.state.caption}
-          />
-          <h4>Change caption</h4>
-          <div>
-            <button
-              onClick={() => {
-                this.getCaption(true);
-              }}
-            >
-              Academic
-            </button>
-            <button
-              onClick={() => {
-                this.getCaption(false);
-              }}
-            >
-              Colloquial
-            </button>
-          </div>
-          <h4>Change turkey</h4>
-          <TurkeyList
-            turkeys={this.state.turkeys}
-            handleUpdate={this.handleUpdate}
-          />
-        </>
-      );
-    } else {
-      return <p>Loading...</p>;
-    }
-  };
-
+    
   render() {
     return (
       <div className="main">
@@ -172,14 +134,14 @@ export default class HomePage extends Component {
                 this.getCaption(true);
               }}
             >
-              Academic
+              Academic caption
             </button>
             <button
               onClick={() => {
                 this.getCaption(false);
               }}
             >
-              Colloquial
+              Colloquial caption
             </button>
           </div>
           <h4>Change turkey</h4>
@@ -191,4 +153,4 @@ export default class HomePage extends Component {
       </div>
     );
   }
-}
+  }
