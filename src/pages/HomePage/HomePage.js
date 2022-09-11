@@ -34,7 +34,7 @@ export default class HomePage extends Component {
       //   reqBody.category = ["sfw"];
       // }
       axiosRetry(axios, {
-        retries: 10,
+        retries: 5,
         retryCondition: (error) => {
           return error.response.status === 502
         },
@@ -52,6 +52,13 @@ export default class HomePage extends Component {
         })
   
         this.setState({caption: formattedLyrics})
+      }).catch((error) => {
+        console.log(error)
+
+        axios.get('https://icanhazdadjoke.com/', {headers: {'Accept': 'application/json'}}).then((response) => {
+          let joke = response.data.joke;
+          this.setState({caption: joke})
+        })
       });
     } else {
       axios.get(API_URL_QUOTE).then((quote) => {
