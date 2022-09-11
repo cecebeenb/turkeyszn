@@ -111,7 +111,7 @@ export default class HomePage extends Component {
         const filteredArray = res.data.results.filter((turkey) => {
           return turkey.id !== this.state.featuredTurkey.id;
         });
-        this.setState({ turkeys: filteredArray });
+        this.setState({ turkeys: filteredArray});
       });
     }
   }
@@ -159,7 +159,35 @@ export default class HomePage extends Component {
       <div className="main">
         <h2>Being an influencer just got easier.</h2>
         <p>This Thanksgiving, allow TurkeySZN to take care of the thing you are most grateful for: your social media presence and following. Generate inspirational content from extraordinary fowl and gifted thinkers, minus the hassle.</p>
-        {this.showResults()}
+        <>
+          <SingleTurkey
+            featuredTurkey={this.state.featuredTurkey}
+            academic={this.state.academic}
+            caption={this.state.caption}
+          />
+          <h4>Change caption</h4>
+          <div>
+            <button
+              onClick={() => {
+                this.getCaption(true);
+              }}
+            >
+              Academic
+            </button>
+            <button
+              onClick={() => {
+                this.getCaption(false);
+              }}
+            >
+              Colloquial
+            </button>
+          </div>
+          <h4>Change turkey</h4>
+          <TurkeyList
+            turkeys={this.state.turkeys}
+            handleUpdate={this.handleUpdate}
+          />
+        </>
       </div>
     );
   }
