@@ -10,41 +10,47 @@ const API_URL_TURKEY_LIST =
 const API_URL_LYRICS =
   "https://a3odwonexi.execute-api.us-east-2.amazonaws.com/default/Bars_API";
 
+  const API_URL_QUOTE = "https://api.quotable.io/random"
+
 export default class HomePage extends Component {
   state = {
     turkeys: [],
     featuredTurkey: null,
     isLoading: true,
     academic: true,
-    lyrics: ''
+    caption: ''
   };
 
-  getLyrics = (isAcademic) => {
-    const reqBody = { method: "getQuote" };
-    if (isAcademic) {
-      reqBody.category = ["sfw", "james_baldwin"];
+  getCaption = (isAcademic) => {
+
+    if (isAcademic == false) {
+      const reqBody = { method: "getQuote", category: ["sfw"] };
+      // if (isAcademic) {
+      //   reqBody.category = ["sfw", "james_baldwin"];
+      // } else {
+      //   reqBody.category = ["sfw"];
+      // }
+      axios.post(API_URL_LYRICS, reqBody).then((lyrics) => {
+        let formattedLyrics = lyrics.data.data.lyric.replaceAll("â", "'")
+        formattedLyrics = formattedLyrics.split('\n')
+        .map((item, idx) => {
+          return (
+            <React.Fragment key={idx}>
+              {item}
+              <br />
+            </React.Fragment>
+          )
+        })
+  
+        this.setState({caption: formattedLyrics})
+      });
     } else {
-      reqBody.category = ["sfw"];
+      axios.get(API_URL_QUOTE).then((quote) => {
+        let formattedQuote = quote.data.content
+        this.setState({caption: formattedQuote})
+      });
     }
-    axios.post(API_URL_LYRICS, reqBody).then((lyrics) => {
-      let formattedLyrics = lyrics.data.data.lyric.replaceAll("â", "'")
-      formattedLyrics = formattedLyrics.split('\n')
-      .map((item, idx) => {
-        return (
-          <React.Fragment key={idx}>
-            {item}
-            <br />
-          </React.Fragment>
-        )
-      })
-      // this.setState({
-      //   featuredTurkey: {
-      //     ...this.state.featuredTurkey,
-      //     lyrics: formattedLyrics,
-      //   },
-      // });
-      this.setState({lyrics: formattedLyrics})
-    });
+
   };
 
   componentDidMount() {
@@ -64,7 +70,7 @@ export default class HomePage extends Component {
         );
       })
       .then(() => {
-        this.getLyrics(this.state.academic);
+        this.getCaption(this.state.academic);
       })
       .then(() => {
         this.setState({ isLoading: false });
@@ -100,20 +106,20 @@ export default class HomePage extends Component {
           <SingleTurkey
             featuredTurkey={this.state.featuredTurkey}
             academic={this.state.academic}
-            lyrics={this.state.lyrics}
+            caption={this.state.caption}
           />
           <h4>Change caption</h4>
           <div>
             <button
               onClick={() => {
-                this.getLyrics(true);
+                this.getCaption(true);
               }}
             >
               Academic
             </button>
             <button
               onClick={() => {
-                this.getLyrics(false);
+                this.getCaption(false);
               }}
             >
               Colloquial
