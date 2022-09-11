@@ -34,7 +34,7 @@ export default class HomePage extends Component {
       //   reqBody.category = ["sfw"];
       // }
       axiosRetry(axios, {
-        retries: 5,
+        retries: 10,
         retryCondition: (error) => {
           return error.response.status === 502
         },
